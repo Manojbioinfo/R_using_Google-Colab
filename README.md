@@ -15,7 +15,7 @@ This work is licensed under the **Creative Commons Attribution-NonCommercial 4.0
 - ⚠️ **Under the following terms:**  
   - **Attribution:** If you find this tutorial useful and use it for your study, please cite it as:
 
-  > Gupta, M. K. 2026. Using R on Google Colab. Zenodo.
+  >  Gupta, Manoj Kumar. Using R on Google Colab. Version 1.0.0, 2026. Zenodo, .
 
   - **NonCommercial:** You may **not use the material for commercial purposes**.  
   - **No additional restrictions:** You may not apply legal terms or technological measures that restrict others from exercising the license.  
