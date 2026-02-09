@@ -1,8 +1,7 @@
-# Bioinformatics Tutorial
+# Using R on Google Colab
 
 ![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
 
-Welcome to the **Bioinformatics Tutorial** repository!  
 This repository offers educational resources, code examples, and step-by-step guidance in bioinformatics for students, researchers, and enthusiasts.
 
 ## 📚 Usage Guidelines
