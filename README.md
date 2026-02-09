@@ -2,7 +2,7 @@
 
 ![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)
 
-This repository offers educational resources, code examples, and step-by-step guidance in bioinformatics for students, researchers, and enthusiasts.
+This repository offers educational resources, code examples, and step-by-step guidance for using R on Google Colab.
 
 ## 📚 Usage Guidelines
 
@@ -15,7 +15,7 @@ This work is licensed under the **Creative Commons Attribution-NonCommercial 4.0
 - ⚠️ **Under the following terms:**  
   - **Attribution:** If you find this tutorial useful and use it for your study, please cite it as:
 
-  > Gupta, M. K. (2026). Bioinformatics Tutorial. Zenodo. https://doi.org/10.5281/zenodo.18548086
+  > Gupta, M. K. 2026. Using R on Google Colab. Zenodo.
 
   - **NonCommercial:** You may **not use the material for commercial purposes**.  
   - **No additional restrictions:** You may not apply legal terms or technological measures that restrict others from exercising the license.  
