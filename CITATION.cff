@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this tutorial, please cite it as below."
 title: "Using R on Google Colab"
 version: "1.0.0"
-doi: ""
+doi: "10.5281/zenodo.18561751"
 authors:
   - family-names: "Gupta"
     given-names: "Manoj Kumar"
