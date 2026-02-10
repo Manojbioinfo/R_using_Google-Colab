@@ -7,12 +7,6 @@ Using R on Google Colab
 - Runs entirely in the cloud — no local installation required.  
 - Commonly used for data science, machine learning, and deep learning workflows.  
 
-### _Hardware Support_
-
-- Provides access to accelerated hardware:
-  - **GPU Runtime:**
-   
-  - **TPU Runtime:**
 
 ### _Language Support_
 
