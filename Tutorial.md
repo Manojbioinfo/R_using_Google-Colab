@@ -162,7 +162,7 @@ This section shows how to create a dedicated folder in Colab’s file system and
 
 
 
-## 5. Writing Your First R Program in Google Colab
+## 4. Writing Your First R Program in Google Colab
 
 **Create, run, and verify your first "Hello World" R program - copy‑paste ready!**
 
@@ -185,7 +185,7 @@ print("Hello World")
 ![FastQC_graph](Images/1_R_inc_colab_image/Slide8_Hello.jpeg)
 
 
-## 4. Installing R Packages for DEG Analysis
+## 5. Installing R Packages for DEG Analysis
 
 **Why packages are REQUIRED**: Base R cannot create publication-quality plots, read Excel files, or handle modern bioinformatics workflows.
 
