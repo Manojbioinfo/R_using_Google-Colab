@@ -501,7 +501,7 @@ Output: Include the code to save the final plot as a high-resolution 300 DPI PDF
 ```
 
 ```r
-print("hello world")
+print(combined_results)
 ```
 
 ```r
