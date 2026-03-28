@@ -162,7 +162,7 @@ Output: Combine these three plots side-by-side into one single image using the p
 
 ```r
 
-**# Estimate time 25 minutes**
+# **Estimate time 25 minutes**
 # Install and load necessary packages
 pkgs_to_install_for_this_task <- c("ggpubr", "patchwork", "ggsci")
 new_pkgs_for_this_task <- pkgs_to_install_for_this_task[!(pkgs_to_install_for_this_task %in% installed.packages()["Package"])]
