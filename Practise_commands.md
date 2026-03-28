@@ -162,7 +162,7 @@ Output: Combine these three plots side-by-side into one single image using the p
 
 ```r
 
-# Estimate time 25 minutes
+**# Estimate time 25 minutes**
 # Install and load necessary packages
 pkgs_to_install_for_this_task <- c("ggpubr", "patchwork", "ggsci")
 new_pkgs_for_this_task <- pkgs_to_install_for_this_task[!(pkgs_to_install_for_this_task %in% installed.packages()["Package"])]
@@ -262,7 +262,7 @@ Keep the design minimalist: clean white background, no grid lines, and Arial fon
 ```
 
 ```r
-#Estimate time 10 mins
+**#Estimate time 10 mins**
 
 # Install and load necessary packages for this task
 pkgs_to_install_for_this_task <- c("ggrepel")
@@ -354,7 +354,7 @@ Formatting rule: Format this chart for a Nature journal. Order the bars from the
 ```
 
 ```r
-Estimated time=10min
+**#Estimated time=10min**
 
 # Load all required libraries
 library(tidyverse)
