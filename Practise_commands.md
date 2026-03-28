@@ -149,7 +149,16 @@ print("Success! The combined publication-quality figure 'phenotype_plots.pdf' ha
 ```
 
 ```r
-print("hello world")
+2. Prompt for the Volcano Plot (Main Figure)
+Copy and paste this into Gemini:
+
+"I have a file called DEGs.csv with columns for Gene_Symbol, log2FoldChange, and padj. Please write R code to create a professional Volcano Plot formatted for a Nature journal. 
+Here is what I need:
+
+Color the upregulated and downregulated genes in distinct, professional colors (like the Nature Publishing Group color palette).
+Automatically find the top 5 most statistically significant marker genes and label them with their gene names. Make sure the text labels do not overlap with each other.
+Draw dashed cutoff lines for significance.
+Keep the design minimalist: clean white background, no grid lines, and Arial font. Give me the code to save the final plot as a high-resolution PDF."
 ```
 
 ```r
