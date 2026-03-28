@@ -163,89 +163,87 @@ Output: Combine these three plots side-by-side into one single image using the p
 
 ```r
 
-# Estimate time 25 minutes
+
 # Install and load necessary packages
-pkgsToInstall <- c("ggpubr", "patchwork")
-newPkgs <- pkgsToInstall[!(pkgsToInstall %in% installed.packages()[,"Package"])]
-if(length(newPkgs)) {
-  install.packages(newPkgs, dependencies = TRUE, repos = "https://cloud.r-project.org/")
+pkgs_to_install_for_this_task <- c("ggpubr", "patchwork", "ggsci")
+new_pkgs_for_this_task <- pkgs_to_install_for_this_task[!(pkgs_to_install_for_this_task %in% installed.packages()["Package"])]
+if(length(new_pkgs_for_this_task)) {
+  install.packages(new_pkgs_for_this_task, dependencies = TRUE, repos = "https://cloud.r-project.org/")
 }
 
 # Load all required libraries
 library(tidyverse)
-library(ggsci)
-library(ggpubr) # For stat_cor
+library(ggsci)   # For NPG color palette
+library(ggpubr)  # For stat_compare_means (Wilcoxon test and p-value display)
 library(patchwork) # For combining plots
 
 # Define the file path
-phenoPath <- "/content/Data/Phenotype.csv"
+pheno_path <- "/content/Data/Phenotype.csv"
 
 # Load the dataset
-pheno <- read.csv(phenoPath)
+pheno <- read.csv(pheno_path)
+
+# Ensure Tumor_status is a factor for proper grouping
+pheno$Tumor_status <- factor(pheno$Tumor_status, levels = c("Healthy", "Cancer"))
 
 # --- Define a custom theme for Nature-like formatting ---
-themeNature <- function() {
-  theme_classic() + 
+theme_nature_comparison <- function() {
+  theme_classic() + # Start with a classic theme for a good base
     theme(
-      plot.background = element_rect(fill = "white", color = NA),
-      panel.background = element_rect(fill = "white", color = NA),
-      panel.grid = element_blank(), 
-      axis.line = element_line(color = "black", linewidth = 0.5), 
-      axis.ticks = element_line(color = "black", linewidth = 0.5), 
-      text = element_text(family = "sans", size = 10), 
-      plot.title = element_text(hjust = 0.5, face = "bold", size = 12), 
-      axis.title = element_text(face = "bold", size = 10), 
-      axis.text = element_text(color = "black", size = 9), 
-      legend.position = "none", 
-      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm") 
+      plot.background = element_rect(fill = "white", color = NA), # White plot background
+      panel.background = element_rect(fill = "white", color = NA), # White panel background
+      panel.grid = element_blank(), # Remove grid lines
+      axis.line = element_line(color = "black", linewidth = 0.5), # Solid black axis lines
+      axis.ticks = element_line(color = "black", linewidth = 0.5), # Solid black axis ticks
+      text = element_text(family = "sans", face = "bold", color = "black", size = 12), # Arial (sans-serif), bold, black, readable size
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 14), # Centered, bold title
+      axis.title = element_text(face = "bold", size = 12), # Bold axis titles
+      axis.text = element_text(color = "black", face = "bold", size = 10), # Black, bold axis text
+      legend.title = element_blank(), # Remove legend title
+      legend.position = "top", # Position legend at the top
+      legend.text = element_text(size = 10, face = "bold"),
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm") # Add some margin around the plot
     )
 }
 
-# --- Create Histograms ---
-histAge <- ggplot(pheno, aes(x = Age)) +
-  geom_histogram(binwidth = 5, fill = "#1F77B4", color = "black", alpha = 0.8) +
-  labs(title = "DistributionOfAge", x = "Age", y = "Frequency") +
-  themeNature()
+# --- Function to create Box-Violin plots with Wilcoxon test ---
+create_box_violin_plot <- function(data, y_var, y_label) {
+  ggplot(data, aes_string(x = "Tumor_status", y = y_var, fill = "Tumor_status")) +
+    geom_violin(trim = FALSE, alpha = 0.6, linewidth = 0.5) + # Violin plot for distribution
+    geom_boxplot(width = 0.2, fill = "white", outlier.shape = NA, linewidth = 0.5) + # Narrow white boxplot inside
+    geom_jitter(color = "black", size = 0.8, alpha = 0.3, width = 0.15) + # Individual data points
+    scale_fill_npg() + # Nature Publishing Group color palette
+    labs(title = paste("Comparison of", y_label, "by Tumor Status"),
+         x = "Tumor Status",
+         y = y_label) +
+    stat_compare_means(comparisons = list(c("Healthy", "Cancer")),
+                       method = "wilcox.test",
+                       label.y = max(data[[y_var]]) * 1.05, # Position p-value above max value
+                       label = "p.format",
+                       size = 4, # Font size for p-value
+                       face = "bold", # Make p-value bold
+                       color = "black") + # Make p-value black
+    theme_nature_comparison()
+}
 
-histWeight <- ggplot(pheno, aes(x = Weight)) +
-  geom_histogram(binwidth = 5, fill = "#2CA02C", color = "black", alpha = 0.8) +
-  labs(title = "DistributionOfWeight", x = "Weight(kg)", y = "Frequency") +
-  themeNature()
+# --- Create the three individual plots ---
+plot_age <- create_box_violin_plot(pheno, "Age", "Age (Years)")
+plot_weight <- create_box_violin_plot(pheno, "Weight", "Weight (kg)")
+plot_height <- create_box_violin_plot(pheno, "Height", "Height (cm)")
 
-histHeight <- ggplot(pheno, aes(x = Height)) +
-  geom_histogram(binwidth = 5, fill = "#D62728", color = "black", alpha = 0.8) +
-  labs(title = "DistributionOfHeight", x = "Height(cm)", y = "Frequency") +
-  themeNature()
+# --- Combine plots side-by-side using patchwork ---
+combined_comparison_plot <- plot_age + plot_weight + plot_height +
+  plot_annotation(tag_levels = 'A') &
+  theme(plot.tag = element_text(size = 14, face = "bold", family = "sans")) # Style for the subplot tags
 
-# --- Create Scatter Plots ---
-scatterAgeWeight <- ggplot(pheno, aes(x = Age, y = Weight)) +
-  geom_point(color = "#FF7F0E", alpha = 0.7, size = 2) +
-  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 0.5) + 
-  stat_cor(method = "pearson", label.x.npc = "left", label.y.npc = "top", size = 4) + 
-  labs(title = "AgeVsWeight", x = "Age", y = "Weight(kg)") +
-  themeNature()
-
-scatterHeightWeight <- ggplot(pheno, aes(x = Height, y = Weight)) +
-  geom_point(color = "#9467BD", alpha = 0.7, size = 2) +
-  geom_smooth(method = "lm", se = FALSE, color = "black", linewidth = 0.5) + 
-  stat_cor(method = "pearson", label.x.npc = "left", label.y.npc = "top", size = 4) + 
-  labs(title = "HeightVsWeight", x = "Height(cm)", y = "Weight(kg)") +
-  themeNature()
-
-# --- Combine Plots using patchwork ---
-combinedPlot <- (histAge | histWeight | histHeight) /
-                 (scatterAgeWeight | scatterHeightWeight) +
-  plot_annotation(tag_levels = 'A') & 
-  theme(plot.tag = element_text(size = 14, face = "bold", family = "sans"))
-
-## PleaseCheckThePath.IfNotSetToTheDataFolder,YouMayNeedToSpecify
 # --- Save the combined figure as a high-resolution PDF ---
-ggsave("/content/Data/PhenotypePlots.pdf", plot = combinedPlot,
-       width = 12, height = 8, units = "in", dpi = 300, device = "pdf")
+ggsave("/content/Data/phenotype_comparison_plots.pdf", plot = combined_comparison_plot,
+       width = 16, height = 7, units = "in", dpi = 300, device = "pdf")
 
 # Provide feedback
-print("Success!TheCombinedFigure'PhenotypePlots.pdf'HasBeenGeneratedAndSaved.")
-
+print("Success! The combined comparison figure 'phenotype_comparison_plots.pdf' has been generated and saved.")
+print("It includes three box-violin plots for Age, Weight, and Height, comparing 'Cancer' vs 'Healthy' groups.")
+print("Each plot shows the p-value from a Wilcoxon test, uses the NPG color palette, and is formatted in a Nature-like style with bold, black text.")
 
 ```
 
