@@ -50,7 +50,8 @@ head(DEGdata)
 ```
 
 ```r
-Copy and paste this into Gemini:
+#Prompt 1: For the exploring Phenotype
+#Copy and paste this into Gemini:
 
 "I have a file called Phenotype.csv with columns for Age, Weight, and Height. Write the complete R code for me to create a publication-quality figure formatted exactly for a Nature journal. 
 I need you to create 5 distinct plots and combine them into one single, neat image:
@@ -149,6 +150,7 @@ print("Success! The combined publication-quality figure 'phenotype_plots.pdf' ha
 
 
 ```r
+#Prompt 2: Generate a boxplot to visualize the differences between healthy and cancer participants.
 I have a file called Phenotype.csv containing clinical data. The columns include Age, Weight, Height, and Tumor_status (which contains two groups: 'Cancer' and 'Healthy'). Please write the complete, reproducible R code to create publication-quality plots comparing these two groups.
 Here is exactly what I need:
 
