@@ -162,7 +162,87 @@ Keep the design minimalist: clean white background, no grid lines, and Arial fon
 ```
 
 ```r
-print("hello world")
+#Estimate time 10 mins
+# Install and load necessary packages for this task
+pkgs_to_install_for_this_task <- c("ggrepel")
+new_pkgs_for_this_task <- pkgs_to_install_for_this_task[!(pkgs_to_install_for_this_task %in% installed.packages()["Package"])]
+if(length(new_pkgs_for_this_task)) {
+  install.packages(new_pkgs_for_this_task, dependencies = TRUE, repos = "https://cloud.r-project.org/")
+}
+
+# Load all required libraries
+library(tidyverse)
+library(ggsci)
+library(ggrepel) # For non-overlapping text labels
+
+# Load the Differentially Expressed Gene (DEG) dataset
+DEGdata <- read.csv("/content/Data/DEGs.csv")
+
+# --- Data Preparation for Volcano Plot ---
+# Define significance thresholds
+log2FC_threshold <- 1
+p_value_threshold <- 0.05
+
+# Calculate -log10(padj) for plotting
+DEGdata$log10_padj <- -log10(DEGdata$padj)
+
+# Create a 'Direction' column for coloring
+DEGdata <- DEGdata %>%
+  mutate(Direction = case_when(
+    padj < p_value_threshold & log2FoldChange > log2FC_threshold ~ "Upregulated",
+    padj < p_value_threshold & log2FoldChange < -log2FC_threshold ~ "Downregulated",
+    TRUE ~ "Not significant"
+  ))
+
+# Identify the top 5 most statistically significant genes (smallest padj)
+top_genes <- DEGdata %>%
+  filter(Direction != "Not significant") %>%
+  arrange(padj) %>%
+  head(5)
+
+# --- Define a custom theme for Nature-like formatting ---
+theme_nature_volcano <- function() {
+  theme_classic() + # Start with a classic theme for a good base
+    theme(
+      plot.background = element_rect(fill = "white", color = NA), # White plot background
+      panel.background = element_rect(fill = "white", color = NA), # White panel background
+      panel.grid = element_blank(), # Remove grid lines
+      axis.line = element_line(color = "black", linewidth = 0.5), # Solid black axis lines
+      axis.ticks = element_line(color = "black", linewidth = 0.5), # Solid black axis ticks
+      text = element_text(family = "sans", size = 10), # Generic sans-serif font (e.g., Arial, Helvetica)
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 12), # Centered, bold title
+      axis.title = element_text(face = "bold", size = 10), # Bold axis titles
+      axis.text = element_text(color = "black", size = 9),
+      legend.title = element_blank(), # Remove legend title
+      legend.position = "top", # Position legend at the top
+      legend.text = element_text(size = 9),
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm") # Add some margin around the plot
+    )
+}
+
+# --- Create the Volcano Plot ---
+volcano_plot <- ggplot(DEGdata, aes(x = log2FoldChange, y = log10_padj, color = Direction)) +
+  geom_point(alpha = 0.8, size = 1) +
+  scale_color_manual(values = c("Upregulated" = "#E41A1C", 
+                                "Downregulated" = "#377EB8", 
+                                "Not significant" = "gray80")) + # Nature-like colors
+  geom_hline(yintercept = -log10(p_value_threshold), linetype = "dashed", color = "black", linewidth = 0.4) +
+  geom_vline(xintercept = c(-log2FC_threshold, log2FC_threshold), linetype = "dashed", color = "black", linewidth = 0.4) +
+  geom_text_repel(data = top_genes, aes(label = Gene_Symbol), 
+                  size = 3, box.padding = 0.5, point.padding = 0.5, 
+                  segment.color = 'black', min.segment.length = 0, max.overlaps = Inf) + # Label top genes
+  labs(title = "Volcano Plot",
+       x = "Log2 Fold Change",
+       y = "-log10(Adjusted P-value)") +
+  theme_nature_volcano()
+
+# --- Save the Volcano Plot as a high-resolution PDF ---
+ggsave("/content/Data/volcano_plot.pdf", plot = volcano_plot,
+       width = 8, height = 7, units = "in", dpi = 300, device = "pdf")
+
+# Provide feedback
+print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been generated and saved.")
+
 ```
 
 ```r
