@@ -354,7 +354,136 @@ Formatting rule: Format this chart for a Nature journal. Order the bars from the
 ```
 
 ```r
-print("hello world")
+# Load all required libraries
+library(tidyverse)
+library(clusterProfiler)
+library(org.Hs.eg.db) # For human gene annotations
+library(ggplot2)
+library(dplyr)
+library(ggsci) # For NPG color palette
+
+# Load the Differentially Expressed Gene (DEG) dataset
+DEGdata <- read.csv("/content/Data/DEGs.csv")
+
+# --- 1. Identify Significant Genes ---
+# Define significance thresholds
+log2FC_threshold <- 1
+p_value_threshold <- 0.05
+
+significant_genes <- DEGdata %>%
+  filter(padj < p_value_threshold & abs(log2FoldChange) > log2FC_threshold) %>%
+  pull(Gene_Symbol) # Extract Gene Symbols of significant genes
+
+# Ensure there are significant genes to proceed
+if (length(significant_genes) == 0) {
+  stop("No significant genes found based on the defined thresholds. Adjust thresholds or check data.")
+}
+
+# --- 2. Gene ID Conversion: Gene Symbol to Entrez ID ---
+# Map gene symbols to Entrez IDs
+entrez_ids <- bitr(significant_genes, 
+                   fromType = "SYMBOL", 
+                   toType = "ENTREZID", 
+                   OrgDb = org.Hs.eg.db)
+
+# Extract unique Entrez IDs
+genes_for_enrichment <- unique(entrez_ids$ENTREZID)
+
+# --- 3. Perform Enrichment Analysis ---
+
+# KEGG Pathway Enrichment (Fixed: Removed 'readable = TRUE')
+kegg_enrichment <- enrichKEGG(gene = genes_for_enrichment,
+                              organism = 'hsa', 
+                              pvalueCutoff = p_value_threshold,
+                              qvalueCutoff = 0.2)
+
+# Make KEGG readable (Convert Entrez IDs back to Gene Symbols)
+if (!is.null(kegg_enrichment)) {
+  kegg_enrichment <- setReadable(kegg_enrichment, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+}
+
+# GO Biological Process (BP) Enrichment
+gobp_enrichment <- enrichGO(gene = genes_for_enrichment,
+                             OrgDb = org.Hs.eg.db,
+                             ont = "BP", 
+                             pvalueCutoff = p_value_threshold,
+                             qvalueCutoff = 0.2,
+                             readable = TRUE)
+
+# GO Molecular Function (MF) Enrichment
+gomf_enrichment <- enrichGO(gene = genes_for_enrichment,
+                             OrgDb = org.Hs.eg.db,
+                             ont = "MF", 
+                             pvalueCutoff = p_value_threshold,
+                             qvalueCutoff = 0.2,
+                             readable = TRUE)
+
+# --- 4. Combine and Filter Results for Top 10 ---
+
+# Convert results to data frames and add a 'Source' column safely
+kegg_df <- if(is.null(kegg_enrichment)) data.frame() else as.data.frame(kegg_enrichment) %>% mutate(Source = "KEGG")
+gobp_df <- if(is.null(gobp_enrichment)) data.frame() else as.data.frame(gobp_enrichment) %>% mutate(Source = "GO:BP")
+gomf_df <- if(is.null(gomf_enrichment)) data.frame() else as.data.frame(gomf_enrichment) %>% mutate(Source = "GO:MF")
+
+# Combine all significant results
+combined_results <- bind_rows(kegg_df, gobp_df, gomf_df) %>%
+  filter(p.adjust < p_value_threshold) # Filter again based on adjusted p-value
+
+# Select the top 10 most significant results based on p.adjust
+top10_results <- combined_results %>%
+  arrange(p.adjust) %>%
+  head(10)
+
+# Ensure there are results to plot
+if (nrow(top10_results) == 0) {
+  stop("No significant pathways/GO terms found after enrichment analysis. Adjust thresholds or check data.")
+}
+
+# --- 5. Create Bar Chart ---
+
+# Define a custom theme for Nature-like formatting
+theme_nature_pathway <- function() {
+  theme_classic() + 
+    theme(
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      panel.grid = element_blank(),
+      axis.line = element_line(color = "black", linewidth = 0.5),
+      axis.ticks = element_line(color = "black", linewidth = 0.5),
+      text = element_text(family = "sans", face = "bold", color = "black", size = 10),
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 12),
+      axis.title = element_text(face = "bold", size = 10),
+      axis.text.x = element_text(color = "black", face = "bold", size = 9),
+      axis.text.y = element_text(color = "black", face = "bold", size = 9),
+      legend.title = element_text(face = "bold", size = 9),
+      legend.text = element_text(size = 8),
+      legend.position = "right",
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")
+    )
+}
+
+# Order the pathways by significance (p.adjust) for plotting
+top10_results$Description <- factor(top10_results$Description, 
+                                    levels = rev(top10_results$Description[order(top10_results$p.adjust)]))
+
+pathway_plot <- ggplot(top10_results, aes(x = Description, y = -log10(p.adjust), fill = p.adjust)) +
+  geom_bar(stat = "identity") +
+  coord_flip() + 
+  scale_fill_gradient(low = "#5D93B5", high = "#1C4E80", name = "Adjusted \nP-value") + 
+  labs(title = "Top 10 Enriched Pathways / GO Terms",
+       x = "Pathway / GO Term",
+       y = "-log10(Adjusted P-value)") +
+  theme_nature_pathway() +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.05)))
+
+print(pathway_plot)
+
+# --- 6. Save the plot as a high-resolution PDF ---
+ggsave("/content/Data/pathway_enrichment_plot.pdf", plot = pathway_plot,
+       width = 10, height = 7, units = "in", dpi = 300, device = "pdf")
+
+print("Success! The professional pathway enrichment plot has been generated and saved.")
+
 ```
 
 ```r
