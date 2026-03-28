@@ -138,7 +138,7 @@ combined_plot <- (hist_age | hist_weight | hist_height) /
                  (scatter_age_weight | scatter_height_weight) +
   plot_annotation(tag_levels = 'A') & 
   theme(plot.tag = element_text(size = 14, face = "bold", family = "sans"))
-
+##Please check the path. If not set to the Data folder, you may need to specify"
 # --- Save the combined figure as a high-resolution PDF ---
 ggsave("/content/Data/phenotype_plots.pdf", plot = combined_plot,
        width = 12, height = 8, units = "in", dpi = 300, device = "pdf")
