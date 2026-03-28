@@ -7,11 +7,14 @@ pkgs <- c("tidyverse", "ggsci", "openxlsx", "googledrive")
 ```
 
 ```r
-print("hello world")
+install.packages(pkgs, dependencies = TRUE, repos = "https://cloud.r-project.org/")
 ```
 
 ```r
-print("hello world")
+library(tidyverse)
+library(ggsci)
+library(openxlsx)
+library(googledrive)
 ```
 
 ```r
