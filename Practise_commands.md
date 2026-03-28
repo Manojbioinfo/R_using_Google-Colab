@@ -30,7 +30,8 @@ head(pheno)
 ```
 
 ```r
-print("hello world")
+# Check dimensions (rows, columns)
+dim(pheno)
 ```
 
 ```r
