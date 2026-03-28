@@ -490,7 +490,7 @@ print("Success! The professional pathway enrichment plot has been generated and 
 ```
 
 ```r
-**Prompt for the for the Bubble Plot**
+**Prompt for the for Pathway Enrichment Bubble Plot**
 I have a file called DEGs.csv containing gene expression data. Please write the complete, reproducible R code to perform a Biological Pathway Enrichment Analysis for humans using the clusterProfiler package. Include the KEGG database, GO Molecular Function (GO:MF), and GO Biological Process (GO:BP). 
 Here is exactly what I need:
 
