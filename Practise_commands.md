@@ -35,11 +35,17 @@ dim(pheno)
 ```
 
 ```r
-print("hello world")
+# Display the structure of the dataframe
+str(pheno)
 ```
 
 ```r
-print("hello world")
+# Load the Differentially Expressed Gene (DEG) dataset
+DEGdata <- read.csv("/content/Data/DEGs.csv")
+
+# Preview the first 6 rows of the data
+head(DEGdata)
+
 ```
 
 ```r
