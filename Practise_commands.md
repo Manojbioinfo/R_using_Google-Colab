@@ -3,7 +3,7 @@ print("hello world")
 ```
 
 ```r
-print("hello world")
+pkgs <- c("tidyverse", "ggsci", "openxlsx", "googledrive")
 ```
 
 ```r
