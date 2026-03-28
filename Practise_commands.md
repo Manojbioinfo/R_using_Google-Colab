@@ -145,7 +145,6 @@ ggsave("/content/Data/phenotype_plots.pdf", plot = combined_plot,
 
 # Provide feedback
 print("Success! The combined publication-quality figure 'phenotype_plots.pdf' has been generated and saved.")
-
 ```
 
 
