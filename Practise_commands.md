@@ -249,7 +249,7 @@ print("Each plot shows the p-value from a Wilcoxon test, uses the NPG color pale
 
 
 ```r
-#Prompt for generating Volcano Plot
+#Prompt5: for generating Volcano Plot
 Copy and paste this into Gemini:
 
 "I have a file called DEGs.csv with columns for Gene_Symbol, log2FoldChange, and padj. Please write R code to create a professional Volcano Plot formatted for a Nature journal. 
