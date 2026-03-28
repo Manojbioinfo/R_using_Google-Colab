@@ -52,7 +52,7 @@ head(DEGdata)
 ```r
 Copy and paste this into Gemini:
 
-"I have a file called Phenotype.csv with columns for Age, Weight, and Height. I do not know how to code, so please write the complete R code for me to create a publication-quality figure formatted exactly for a Nature journal. 
+"I have a file called Phenotype.csv with columns for Age, Weight, and Height. Write the complete R code for me to create a publication-quality figure formatted exactly for a Nature journal. 
 I need you to create 5 distinct plots and combine them into one single, neat image:
 
 Three simple histograms showing the distribution of Age, Weight, and Height. 
