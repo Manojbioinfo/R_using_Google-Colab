@@ -487,7 +487,15 @@ print("Success! The professional pathway enrichment plot has been generated and 
 ```
 
 ```r
-print("hello world")
+Prompt for the for the Bubble Plot
+I have a file called DEGs.csv containing gene expression data. Please write the complete, reproducible R code to perform a Biological Pathway Enrichment Analysis for humans using the clusterProfiler package. Include the KEGG database, GO Molecular Function (GO:MF), and GO Biological Process (GO:BP). 
+Here is exactly what I need:
+
+Data Processing: Identify significant genes (padj < 0.05, |log2FC| > 1), convert them to Entrez IDs, run the enrichment analyses, and extract the top 10 most significant results combined across all three databases.
+Plot Type: Create a highly professional, publication-quality Bubble Plot (Dot Plot) to visualize these top 10 results. 
+Plot Mapping: The Y-axis should be the Pathway/GO Term name. The X-axis should be the Gene Ratio. The size of the bubbles should represent the number of genes (Count), and the color of the bubbles should represent the adjusted p-value (p.adjust) using a continuous gradient (e.g., from red for high significance to blue for lower significance).
+Formatting (Nature Journal Style): Use a clean white background, no grid lines, and solid black axis lines. Make all text, numbers, and axis labels Arial (or sans-serif), bold, completely black, and large enough to be easily readable. 
+Output: Include the code to save the final plot as a high-resolution 300 DPI PDF using ggsave.
 ```
 
 ```r
