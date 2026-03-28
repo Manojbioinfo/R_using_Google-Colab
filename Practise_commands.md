@@ -502,6 +502,7 @@ Output: Include the code to save the final plot as a high-resolution 300 DPI PDF
 ```
 
 ```r
+#**Estimated time=10min**
 # Load required libraries
 library(tidyverse)
 library(clusterProfiler)
@@ -603,6 +604,8 @@ print("Success! The professional bubble plot has been generated and saved.")
 
 
 ```r
+ #For generating Pathway Enrichment Bubble Plot separated by each source
+
 I have an enrichment analysis result dataframe that contains columns for Description (pathway name), p.adjust, Count, and Source (e.g., KEGG, GO:MF, GO:BP). 
 Please write R code using ggplot2 to create a highly professional, publication-quality Bubble Plot with the following mappings:
 
@@ -616,6 +619,7 @@ Formatting (Nature Journal Style): Use a clean white background with a faint das
 ```
 
 ```r
+#**Estimated time=10min**
 # Load required libraries
 library(tidyverse)
 library(ggplot2)
