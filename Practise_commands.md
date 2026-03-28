@@ -514,7 +514,63 @@ Formatting (Nature Journal Style): Use a clean white background with a faint das
 ```
 
 ```r
-print("hello world")
+# Load required libraries
+library(tidyverse)
+library(ggplot2)
+
+# Assuming your enrichment results are stored in a dataframe called `combined_results`
+# (which matches the clipboard data you provided)
+
+# --- 1. Filter and extract Top 5 terms PER SOURCE ---
+top_results_by_source <- combined_results %>%
+  filter(p.adjust < 0.05) %>%
+  group_by(Source) %>%
+  arrange(p.adjust) %>%
+  slice_head(n = 5) %>% # Take the top 5 most significant from KEGG, GO:BP, GO:MF, etc.
+  ungroup()
+
+# Ensure the Description is ordered by Source and then by p.adjust for neat plotting
+top_results_by_source <- top_results_by_source %>%
+  arrange(Source, desc(p.adjust)) %>%
+  mutate(Description = factor(Description, levels = unique(Description)))
+
+# --- 2. Define Publication-Ready Theme ---
+theme_nature_source_bubble <- function() {
+  theme_bw() + # Clean white background with a border
+    theme(
+      panel.grid.major = element_line(color = "grey85", linetype = "dashed", linewidth = 0.5), # Faint dashed grid
+      panel.grid.minor = element_blank(),
+      panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+      text = element_text(family = "sans", face = "bold", color = "black", size = 10),
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 13),
+      axis.title = element_text(face = "bold", size = 11),
+      axis.text.x = element_text(color = "black", face = "bold", size = 11), # Larger X-axis text for Source
+      axis.text.y = element_text(color = "black", face = "bold", size = 10),
+      legend.title = element_text(face = "bold", size = 10),
+      legend.text = element_text(size = 9),
+      legend.position = "right",
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")
+    )
+}
+
+# --- 3. Create the Bubble Plot ---
+source_bubble_plot <- ggplot(top_results_by_source, aes(x = Source, y = Description)) +
+  geom_point(aes(size = Count, color = p.adjust)) +
+  scale_color_gradient(low = "#E64B35", high = "#4DBBD5", name = "Adjusted\nP-value") + # NPG Red to Blue
+  scale_size_continuous(name = "Gene Count", range = c(3, 8)) + # Adjust bubble size range for visibility
+  labs(title = "Top Enriched Pathways by Database",
+       x = "Database Source",
+       y = "Pathway / GO Term") +
+  theme_nature_source_bubble()
+
+print(source_bubble_plot)
+
+# --- 4. Save the Plot ---
+ggsave("/content/Data/pathway_source_bubble_plot.pdf", plot = source_bubble_plot,
+       width = 10, height = 8, units = "in", dpi = 300, device = "pdf")
+
+print("Success! The bubble plot categorized by Source has been generated and saved.")
+
 ```
 
 ```r
