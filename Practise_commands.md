@@ -7,6 +7,7 @@ pkgs <- c("tidyverse", "ggsci", "openxlsx", "googledrive")
 ```
 
 ```r
+#Estimate time 20 minutes
 install.packages(pkgs, dependencies = TRUE, repos = "https://cloud.r-project.org/")
 ```
 
