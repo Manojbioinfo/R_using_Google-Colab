@@ -49,7 +49,15 @@ head(DEGdata)
 ```
 
 ```r
-print("hello world")
+Copy and paste this into Gemini:
+
+"I have a file called Phenotype.csv with columns for Age, Weight, and Height. I do not know how to code, so please write the complete R code for me to create a publication-quality figure formatted exactly for a Nature journal. 
+I need you to create 5 distinct plots and combine them into one single, neat image:
+
+Three simple histograms showing the distribution of Age, Weight, and Height. 
+Two scatter plots showing the correlation between Age & Weight, and Height & Weight (please calculate and print the p-value directly on the plots).
+
+Formatting rule: Make it look like a Nature paper. Use a clean white background, no grid lines, solid black axis lines, and Arial font. Use high-contrast, professional colors. Finally, give me the code to save it as a high-resolution 300 DPI PDF."
 ```
 
 ```r
