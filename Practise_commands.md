@@ -356,14 +356,36 @@ Formatting rule: Format this chart for a Nature journal. Order the bars from the
 
 ```r
 #**Estimated time=10min**
-# Check if BiocManager is installed; install if missing
+# Vector of CRAN packages
+cran_pkgs <- c("tidyverse", "ggplot2", "dplyr", "ggsci")
+
+# Vector of Bioconductor packages
+bioc_pkgs <- c("clusterProfiler", "org.Hs.eg.db")
+
+# Install BiocManager if needed
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
 
-# Check if clusterProfiler is installed; install if missing
-if (!requireNamespace("clusterProfiler", quietly = TRUE)) {
-  BiocManager::install("clusterProfiler")
+# Install missing CRAN packages
+for (pkg in cran_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}
+
+# Install missing Bioconductor packages
+for (pkg in bioc_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    BiocManager::install(pkg, ask = FALSE, update = FALSE)
+  }
+}
+
+# Load all packages
+all_pkgs <- c(cran_pkgs, bioc_pkgs)
+
+for (pkg in all_pkgs) {
+  library(pkg, character.only = TRUE)
 }
 
 # Load all required libraries
