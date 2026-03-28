@@ -148,6 +148,24 @@ print("Success! The combined publication-quality figure 'phenotype_plots.pdf' ha
 
 ```
 
+
+```r
+I have a file called Phenotype.csv containing clinical data. The columns include Age, Weight, Height, and Tumor_status (which contains two groups: 'Cancer' and 'Healthy'). Please write the complete, reproducible R code to create publication-quality plots comparing these two groups.
+Here is exactly what I need:
+
+Plot Type: Create three separate 'Box-Violin' plots (a violin plot with a narrow boxplot overlaid inside it) comparing 'Cancer' vs 'Healthy' for Age, Weight, and Height.
+Statistics: Automatically perform a Wilcoxon statistical test comparing the two groups for each plot, and print the exact p-value directly on the charts using the ggpubr package.
+Formatting (Nature Journal Style): Use a clean white background, no grid lines, and solid black axis lines. Make all text, numbers, and axis labels Arial, bold, completely black, and large enough to be easily readable. 
+Colors: Use the ggsci package to apply the professional Nature Publishing Group (NPG) color palette for the groups.
+Output: Combine these three plots side-by-side into one single image using the patchwork package. Include the code to save the final combined image as a high-resolution 300 DPI PDF.
+```
+
+```r
+print("hello world")
+```
+
+
+
 ```r
 2. Prompt for the Volcano Plot (Main Figure)
 Copy and paste this into Gemini:
@@ -246,13 +264,6 @@ print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been genera
 
 ```
 
-```r
-print("hello world")
-```
-
-```r
-print("hello world")
-```
 
 ```r
 print("hello world")
