@@ -62,7 +62,7 @@ Formatting rule: Make it look like a Nature paper. Use a clean white background,
 ```
 
 ```r
-
+#Estimate time 25 minutes
 # Install and load necessary packages
 # Check if ggpubr and patchwork are installed, install if not.
 pkgs_to_install_for_this_task <- c("ggpubr", "patchwork")
