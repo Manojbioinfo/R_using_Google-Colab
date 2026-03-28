@@ -356,6 +356,15 @@ Formatting rule: Format this chart for a Nature journal. Order the bars from the
 
 ```r
 #**Estimated time=10min**
+# Check if BiocManager is installed; install if missing
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+
+# Check if clusterProfiler is installed; install if missing
+if (!requireNamespace("clusterProfiler", quietly = TRUE)) {
+  BiocManager::install("clusterProfiler")
+}
 
 # Load all required libraries
 library(tidyverse)
