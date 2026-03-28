@@ -348,6 +348,7 @@ print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been genera
 
 
 ```r
+# Prompt for Human Gene Pathway Enrichment
 I have a file called DEGs.csv containing my gene expression data. Using the significant genes from this file, please write R code to perform a Biological Pathway Enrichment Analysis for humans. Please specifically include the KEGG database, GO Molecular Function (GO:MF), and GO Biological Process (GO:BP). 
 After running the analysis, create a professional bar chart showing the top 10 most significant results across these databases. 
 Formatting rule: Format this chart for a Nature journal. Order the bars from the most significant pathway at the top to the least significant at the bottom. Color the bars based on their p-value (e.g., dark blue for highly significant, light blue for less significant). Make the background completely clean (no grid lines), use solid black axis lines, and use Arial font. Finally, include the code to save this as a high-resolution 300 DPI PDF.
