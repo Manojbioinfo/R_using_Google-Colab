@@ -501,6 +501,107 @@ Output: Include the code to save the final plot as a high-resolution 300 DPI PDF
 ```
 
 ```r
+# Load required libraries
+library(tidyverse)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+library(ggplot2)
+
+# Load the Differentially Expressed Gene (DEG) dataset
+DEGdata <- read.csv("/content/Data/DEGs.csv")
+
+# --- 1. Identify Significant Genes ---
+log2FC_threshold <- 1
+p_value_threshold <- 0.05
+
+significant_genes <- DEGdata %>%
+  filter(padj < p_value_threshold & abs(log2FoldChange) > log2FC_threshold) %>%
+  pull(Gene_Symbol)
+
+if (length(significant_genes) == 0) stop("No significant genes found.")
+
+# --- 2. Gene ID Conversion ---
+entrez_ids <- bitr(significant_genes, fromType = "SYMBOL", toType = "ENTREZID", OrgDb = org.Hs.eg.db)
+genes_for_enrichment <- unique(entrez_ids$ENTREZID)
+
+# --- 3. Perform Enrichment Analysis ---
+# KEGG
+kegg_enrichment <- enrichKEGG(gene = genes_for_enrichment, organism = 'hsa', pvalueCutoff = p_value_threshold)
+if (!is.null(kegg_enrichment)) kegg_enrichment <- setReadable(kegg_enrichment, OrgDb = org.Hs.eg.db, keyType="ENTREZID")
+
+# GO:BP
+gobp_enrichment <- enrichGO(gene = genes_for_enrichment, OrgDb = org.Hs.eg.db, ont = "BP", pvalueCutoff = p_value_threshold, readable = TRUE)
+
+# GO:MF
+gomf_enrichment <- enrichGO(gene = genes_for_enrichment, OrgDb = org.Hs.eg.db, ont = "MF", pvalueCutoff = p_value_threshold, readable = TRUE)
+
+# --- 4. Combine and Filter Results ---
+kegg_df <- if(is.null(kegg_enrichment)) data.frame() else as.data.frame(kegg_enrichment) %>% mutate(Source = "KEGG")
+gobp_df <- if(is.null(gobp_enrichment)) data.frame() else as.data.frame(gobp_enrichment) %>% mutate(Source = "GO:BP")
+gomf_df <- if(is.null(gomf_enrichment)) data.frame() else as.data.frame(gomf_enrichment) %>% mutate(Source = "GO:MF")
+
+combined_results <- bind_rows(kegg_df, gobp_df, gomf_df) %>%
+  filter(p.adjust < p_value_threshold)
+
+top10_results <- combined_results %>%
+  arrange(p.adjust) %>%
+  head(10)
+
+if (nrow(top10_results) == 0) stop("No significant pathways found.")
+
+# --- 5. Format Data for Bubble Plot ---
+# Convert GeneRatio from string "10/100" to a numeric decimal for the X-axis
+top10_results <- top10_results %>%
+  mutate(GeneRatio_Num = sapply(strsplit(GeneRatio, "/"), function(x) as.numeric(x[1]) / as.numeric(x[2])))
+
+# Order the pathways by GeneRatio (or p.adjust) for plotting
+top10_results$Description <- factor(top10_results$Description, 
+                                    levels = top10_results$Description[order(top10_results$GeneRatio_Num)])
+
+# Define Nature-like theme
+theme_nature_bubble <- function() {
+  theme_classic() + 
+    theme(
+      plot.background = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      panel.grid.major = element_line(color = "grey90", linetype = "dashed"), # Faint dashed grid helps guide the eye in bubble plots
+      panel.grid.minor = element_blank(),
+      axis.line = element_line(color = "black", linewidth = 0.5),
+      axis.ticks = element_line(color = "black", linewidth = 0.5),
+      text = element_text(family = "sans", face = "bold", color = "black", size = 10),
+      plot.title = element_text(hjust = 0.5, face = "bold", size = 12),
+      axis.title = element_text(face = "bold", size = 10),
+      axis.text.x = element_text(color = "black", face = "bold", size = 10),
+      axis.text.y = element_text(color = "black", face = "bold", size = 10),
+      legend.title = element_text(face = "bold", size = 9),
+      legend.text = element_text(size = 9),
+      legend.position = "right",
+      plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")
+    )
+}
+
+# Create the Bubble Plot
+bubble_plot <- ggplot(top10_results, aes(x = GeneRatio_Num, y = Description)) +
+  geom_point(aes(size = Count, color = p.adjust)) +
+  scale_color_gradient(low = "#E64B35", high = "#4DBBD5", name = "Adjusted\nP-value") + # NPG Red to Blue
+  scale_size_continuous(name = "Gene Count") +
+  labs(title = "Top 10 Enriched Pathways / GO Terms",
+       x = "Gene Ratio",
+       y = "") +
+  theme_nature_bubble()
+
+print(bubble_plot)
+
+# --- 6. Save Plot ---
+ggsave("/content/Data/pathway_enrichment_bubble_plot.pdf", plot = bubble_plot,
+       width = 10, height = 7, units = "in", dpi = 300, device = "pdf")
+
+print("Success! The professional bubble plot has been generated and saved.")
+
+```
+
+
+```r
 I have an enrichment analysis result dataframe that contains columns for Description (pathway name), p.adjust, Count, and Source (e.g., KEGG, GO:MF, GO:BP). 
 Please write R code using ggplot2 to create a highly professional, publication-quality Bubble Plot with the following mappings:
 
