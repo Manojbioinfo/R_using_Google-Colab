@@ -155,7 +155,7 @@ Copy and paste this into Gemini:
 "I have a file called DEGs.csv with columns for Gene_Symbol, log2FoldChange, and padj. Please write R code to create a professional Volcano Plot formatted for a Nature journal. 
 Here is what I need:
 
-Color the upregulated and downregulated genes in distinct, professional colors (like the Nature Publishing Group color palette).
+Color the upregulated and downregulated genes in distinct, make the font bold and clear to read and professional colors (like the Nature Publishing Group color palette).
 Automatically find the top 5 most statistically significant marker genes and label them with their gene names. Make sure the text labels do not overlap with each other.
 Draw dashed cutoff lines for significance.
 Keep the design minimalist: clean white background, no grid lines, and Arial font. Give me the code to save the final plot as a high-resolution PDF."
@@ -163,6 +163,7 @@ Keep the design minimalist: clean white background, no grid lines, and Arial fon
 
 ```r
 #Estimate time 10 mins
+
 # Install and load necessary packages for this task
 pkgs_to_install_for_this_task <- c("ggrepel")
 new_pkgs_for_this_task <- pkgs_to_install_for_this_task[!(pkgs_to_install_for_this_task %in% installed.packages()["Package"])]
@@ -229,7 +230,7 @@ volcano_plot <- ggplot(DEGdata, aes(x = log2FoldChange, y = log10_padj, color = 
   geom_hline(yintercept = -log10(p_value_threshold), linetype = "dashed", color = "black", linewidth = 0.4) +
   geom_vline(xintercept = c(-log2FC_threshold, log2FC_threshold), linetype = "dashed", color = "black", linewidth = 0.4) +
   geom_text_repel(data = top_genes, aes(label = Gene_Symbol), 
-                  size = 3, box.padding = 0.5, point.padding = 0.5, 
+                  size = 4, fontface = "bold", box.padding = 0.5, point.padding = 0.5, 
                   segment.color = 'black', min.segment.length = 0, max.overlaps = Inf) + # Label top genes
   labs(title = "Volcano Plot",
        x = "Log2 Fold Change",
@@ -241,7 +242,7 @@ ggsave("/content/Data/volcano_plot.pdf", plot = volcano_plot,
        width = 8, height = 7, units = "in", dpi = 300, device = "pdf")
 
 # Provide feedback
-print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been generated and saved.")
+print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been generated and saved with bold and clear gene labels.")
 
 ```
 
