@@ -501,7 +501,16 @@ Output: Include the code to save the final plot as a high-resolution 300 DPI PDF
 ```
 
 ```r
-print(combined_results)
+I have an enrichment analysis result dataframe that contains columns for Description (pathway name), p.adjust, Count, and Source (e.g., KEGG, GO:MF, GO:BP). 
+Please write R code using ggplot2 to create a highly professional, publication-quality Bubble Plot with the following mappings:
+
+X-axis: Source (The database the pathway comes from).
+Y-axis: Description (The name of the pathway or GO term).
+Bubble Size: Count (Number of genes).
+Bubble Color: p.adjust (Continuous gradient from red for high significance to blue for lower significance).
+
+Data Filtering: Please group the data by Source and extract the top 5 most significant terms (lowest p.adjust) from each database so the plot is balanced.
+Formatting (Nature Journal Style): Use a clean white background with a faint dashed grid so the viewer can easily align the bubbles with the axes. Make all text, numbers, and axis labels Arial (or sans-serif), bold, completely black, and large enough to be easily readable. Save the final plot as a high-resolution 300 DPI PDF.
 ```
 
 ```r
