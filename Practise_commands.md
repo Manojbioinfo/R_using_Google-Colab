@@ -18,7 +18,15 @@ library(googledrive)
 ```
 
 ```r
-print("hello world")
+# Define the file path
+pheno_path <- "/content/Data/Phenotype.csv"
+
+# Load the dataset
+pheno <- read.csv(pheno_path)
+
+# View the first few rows
+head(pheno)
+
 ```
 
 ```r
