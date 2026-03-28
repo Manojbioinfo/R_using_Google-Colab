@@ -249,7 +249,7 @@ print("Each plot shows the p-value from a Wilcoxon test, uses the NPG color pale
 
 
 ```r
-#Prompt5: for generating Volcano Plot
+#Prompt3: for generating Volcano Plot
 Copy and paste this into Gemini:
 
 "I have a file called DEGs.csv with columns for Gene_Symbol, log2FoldChange, and padj. Please write R code to create a professional Volcano Plot formatted for a Nature journal. 
@@ -348,7 +348,7 @@ print("Success! The professional Volcano Plot 'volcano_plot.pdf' has been genera
 
 
 ```r
-# Prompt for Human Gene Pathway Enrichment
+##Prompt 4: Human Gene Pathway Enrichment
 I have a file called DEGs.csv containing my gene expression data. Using the significant genes from this file, please write R code to perform a Biological Pathway Enrichment Analysis for humans. Please specifically include the KEGG database, GO Molecular Function (GO:MF), and GO Biological Process (GO:BP). 
 After running the analysis, create a professional bar chart showing the top 10 most significant results across these databases. 
 Formatting rule: Format this chart for a Nature journal. Order the bars from the most significant pathway at the top to the least significant at the bottom. Color the bars based on their p-value (e.g., dark blue for highly significant, light blue for less significant). Make the background completely clean (no grid lines), use solid black axis lines, and use Arial font. Finally, include the code to save this as a high-resolution 300 DPI PDF.
@@ -521,7 +521,7 @@ print("Success! The professional pathway enrichment plot has been generated and 
 ```
 
 ```r
-**Prompt for the for Pathway Enrichment Bubble Plot**
+#**Prompt 5: Prompt for the for Pathway Enrichment Bubble Plot**
 I have a file called DEGs.csv containing gene expression data. Please write the complete, reproducible R code to perform a Biological Pathway Enrichment Analysis for humans using the clusterProfiler package. Include the KEGG database, GO Molecular Function (GO:MF), and GO Biological Process (GO:BP). 
 Here is exactly what I need:
 
@@ -635,7 +635,7 @@ print("Success! The professional bubble plot has been generated and saved.")
 
 
 ```r
- #For generating Pathway Enrichment Bubble Plot separated by each source
+ ##Prompt 6: For generating Pathway Enrichment Bubble Plot separated by each source
 
 I have an enrichment analysis result dataframe that contains columns for Description (pathway name), p.adjust, Count, and Source (e.g., KEGG, GO:MF, GO:BP). 
 Please write R code using ggplot2 to create a highly professional, publication-quality Bubble Plot with the following mappings:
