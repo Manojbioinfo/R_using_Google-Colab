@@ -1,6 +1,5 @@
 Using R on Google Colab
 ---
-
 ## 1. Introduction
 
 - **Google Colab** is a free (usage-limited) hosted notebook environment provided by Google.  
