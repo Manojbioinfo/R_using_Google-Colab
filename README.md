@@ -1,6 +1,6 @@
 # Beyond the Desktop: A Practical Protocol for R-Powered Bioinformatics in Google Colab
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20001885.svg)](https://doi.org/10.5281/zenodo.20001885)
 
 
 ## 📜 Overview
@@ -59,4 +59,4 @@ All rights reserved during review period.
 ## 📚 How to Cite
 For citation during review period:
 
-Gupta, M. K., Vadde, R., & Nagaraju, G. P. (2026). Beyond the Desktop: A Practical Protocol for R-Powered Bioinformatics in Google Colab (Review Version). Zenodo. https://doi.org/10.5281/zenodo.XXXXXXX
+Gupta, M. K., Ramakrishna, V., & Nagaraju, G. P. (2026). Beyond the Desktop: A Practical Protocol for R-Powered Bioinformatics in Google Colab (V1.1). Zenodo. https://doi.org/10.5281/zenodo.20001885
