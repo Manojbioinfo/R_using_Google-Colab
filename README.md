@@ -34,9 +34,13 @@ This tutorial is provided **exclusively for manuscript review purposes** (2026) 
 ---
 
 ## 📬 Contact for Permissions
+
 **Corresponding Author:**
+
 👤 **Dr. Manoj Kumar Gupta, Ph.D.**
+
 📧 [gupta.manoj@mh-hannover.de](mailto:gupta.manoj@mh-hannover.de) | [mkgupta.bioinfo@gmail.com](mailto:mkgupta.bioinfo@gmail.com)
+
 🏛 Hannover Medical School, Germany
 
 **For permission requests during review period:**
@@ -48,6 +52,7 @@ This tutorial is provided **exclusively for manuscript review purposes** (2026) 
 
 ## 📜 Copyright Notice
 📄 **Copyright © 2026 Manoj Kumar Gupta, Ramakrishna Vadde, Ganji Purnachandra Nagaraju**
+
 All rights reserved during review period.
 
 - **Code testing** permitted for review purposes only
