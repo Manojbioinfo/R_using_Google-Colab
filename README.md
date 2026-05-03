@@ -33,4 +33,9 @@ Contributions are welcome! If you have suggestions, corrections, or improvements
 
 This repository is licensed under **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)**. You may reference, learn from, or adapt the material **for non-commercial purposes only**, with proper attribution to the author. For any commercial use, you **must obtain explicit permission** from the author.  
 
+📬 Contact
+For questions or suggestions:
+📧 Dr. Manoj Kumar Gupta | mkgupta.bioinfo@gmail.com; gupta.manoj@mh-hannover.de
+
+
 ---
