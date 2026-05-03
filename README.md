@@ -57,11 +57,6 @@ This tutorial is provided **exclusively for manuscript review purposes** (2026) 
 
 🏛 Hannover Medical School, Germany
 
-**For permission requests during review period:**
-- State your review role (editor/reviewer)
-- Specify requested access duration
-- Confirm confidentiality agreement
-
 ---
 
 ## 📜 Copyright Notice
