@@ -5,7 +5,21 @@
 
 ## 📜 Overview
 This Google Colab tutorial accompanies the manuscript:
+
 **"Beyond the Desktop: A Practical Protocol for R-Powered Bioinformatics in Google Colab"**
+
+**Authors:**
+
+Manoj Kumar Gupta<sup>1,∗</sup>,
+Ramakrishna Vadde<sup>2</sup>,
+Ganji Purnachandra Nagaraju<sup>3</sup>
+
+<sup>1</sup>Hematology, Hemostasis, Oncology, and Stem Cell Transplantation, Hannover Medical School, Hannover 30625, Germany
+
+<sup>2</sup>Department of Biotechnology & Bioinformatics, Yogi Vemana University, Kadapa - 516005, A.P., India
+
+<sup>3</sup>Division of Hematology & Oncology, Heersink School of Medicine, University of Alabama at Birmingham, Birmingham, AL 35233, USA
+
 
 ### 🔒 **Review Access Guidelines**
 This tutorial is provided **exclusively for manuscript review purposes** (2026) with the following terms:
